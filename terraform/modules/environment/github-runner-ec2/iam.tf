@@ -86,7 +86,7 @@ data "aws_iam_policy_document" "github_runner_ssm_automation_trust" {
 resource "aws_iam_role" "github_runner_ssm_automation" {
   count = var.cloudwatch_enable_schedule ? 1 : 0
 
-  name               = "${var.pj}-GitLab-Runner-SSMautomation"
+  name               = "${var.pj}-GitHub-Runner-SSMautomation"
   assume_role_policy = data.aws_iam_policy_document.github_runner_ssm_automation_trust.json
 }
 
@@ -113,6 +113,6 @@ data "aws_iam_policy_document" "runner_event_invoke_assume_role" {
 resource "aws_iam_role" "event_invoke_assume_role" {
   count = var.cloudwatch_enable_schedule ? 1 : 0
 
-  name               = "${var.pj}-GitLab-Runner-CloudWatchEventRole"
+  name               = "${var.pj}-GitHub-Runner-CloudWatchEventRole"
   assume_role_policy = data.aws_iam_policy_document.runner_event_invoke_assume_role.json
 }

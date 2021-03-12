@@ -11,8 +11,8 @@ usermod -a -G docker ec2-user
 
 # Download runner
 mkdir actions-runner && cd actions-runner
-curl -O -L https://github.com/actions/runner/releases/download/v2.277.1/actions-runner-linux-x64-2.277.1.tar.gz
-tar xzf ./actions-runner-linux-x64-2.277.1.tar.gz
+curl -O -L "https://github.com/actions/runner/releases/download/v${var.ec2_runner_version}/actions-runner-linux-x64-${var.ec2_runner_version}.tar.gz"
+tar xzf "./actions-runner-linux-x64-${var.ec2_runner_version}.tar.gz"
 
 # setup runner
 chmod 777 -R /actions-runner
@@ -24,28 +24,28 @@ su - ec2-user -c '/actions-runner/run.sh'
 ## Docker resources prune
 echo '
 [Unit]
-Description=GitLab Runner Docker Executor cleanup task
+Description=GitHub Runner Docker Executor cleanup task
 
 [Service]
 Type=simple
 ExecStart=/usr/bin/docker system prune --force
-User=gitlab-runner
-' > /etc/systemd/system/gitlab-runner-docker-executor-cleanup.service
+User=ec2-user
+' > /etc/systemd/system/github-runner-docker-executor-cleanup.service
 
 echo '
 [Unit]
-Description=GitLab Runner Docker Executor cleanup task timer
+Description=GitHub Runner Docker Executor cleanup task timer
 
 [Timer]
 OnCalendar=*-*-* *:00:00
-Unit=gitlab-runner-docker-executor-cleanup.service
+Unit=github-runner-docker-executor-cleanup.service
 
 [Install]
 WantedBy=multi-user.target
-' > /etc/systemd/system/gitlab-runner-docker-executor-cleanup.timer
+' > /etc/systemd/system/github-runner-docker-executor-cleanup.timer
 
-systemctl enable gitlab-runner-docker-executor-cleanup.timer
-systemctl start gitlab-runner-docker-executor-cleanup.timer
+systemctl enable github-runner-docker-executor-cleanup.timer
+systemctl start github-runner-docker-executor-cleanup.timer
 
 
     SHELLSCRIPT

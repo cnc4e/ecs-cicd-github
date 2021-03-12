@@ -2,7 +2,7 @@ resource "aws_security_group" "github_runner" {
 
   name        = "${var.pj}-github-runner-sg"
   vpc_id      = var.vpc_id
-  description = "For GitLab Runner EC2"
+  description = "For GitHub Runner EC2"
 
   tags = merge(
     {

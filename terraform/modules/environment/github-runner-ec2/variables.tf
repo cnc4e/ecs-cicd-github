@@ -16,7 +16,7 @@ variable "vpc_id" {
 
 # module parameter
 variable "ec2_github_url" {
-  description = "GitLab Runnerのアクセス先となる、GitHubのURL"
+  description = "GitHub Runnerのアクセス先となる、GitHubのURL"
   type        = string
 }
 
@@ -26,7 +26,12 @@ variable "ec2_registration_token" {
 }
 
 variable "ec2_runner_name" {
-  description = "GitLabで表示されるrunnerの名前"
+  description = "GitHubで表示されるrunnerの名前"
+  type        = string
+}
+
+variable "ec2_runner_version" {
+  description = "GitHub Runnerのバージョン"
   type        = string
 }
 
@@ -36,39 +41,39 @@ variable "ec2_runner_tags" {
 }
 
 variable "ec2_instance_type" {
-  description = "GitLab Runnerのインスタンスタイプ"
+  description = "GitHub Runnerのインスタンスタイプ"
   type        = string
 }
 
 variable "ec2_subnet_id" {
-  description = "GitLab Runnerを配置するパブリックサブネットのID"
+  description = "GitHub Runnerを配置するパブリックサブネットのID"
   type        = string
 }
 
 variable "ec2_root_block_volume_size" {
-  description = "GitLab Runnerのルートデバイスの容量(GB)"
+  description = "GitHub Runnerのルートデバイスの容量(GB)"
   type        = string
 }
 
 variable "ec2_key_name" {
-  description = "GitLab Runnerのインスタンスにsshログインするためのキーペア名"
+  description = "GitHub Runnerのインスタンスにsshログインするためのキーペア名"
   type        = string
 }
 
 variable "cloudwatch_enable_schedule" {
-  description = "GitLabインスタンスを自動起動/停止するか"
+  description = "GitHubインスタンスを自動起動/停止するか"
   type        = bool
   default     = false
 }
 
 variable "cloudwatch_start_schedule" {
-  description = "GitLabインスタンスを自動起動する時間。時間の指定はUTCのため注意"
+  description = "GitHubインスタンスを自動起動する時間。時間の指定はUTCのため注意"
   type        = string
   default     = "cron(0 0 ? * MON-FRI *)"
 }
 
 variable "cloudwatch_stop_schedule" {
-  description = "GitLabインスタンスを自動停止する時間。時間の指定はUTCのため注意"
+  description = "GitHubインスタンスを自動停止する時間。時間の指定はUTCのため注意"
   type        = string
   default     = "cron(0 10 ? * MON-FRI *)"
 }

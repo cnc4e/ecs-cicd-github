@@ -33,7 +33,7 @@ locals {
   ec2_subnet                 = data.terraform_remote_state.network.outputs.public_subnet_ids[0]
   ec2_instance_type          = "t2.micro"
   ec2_root_block_volume_size = 30
-  ec2_key_name               = "PJ-NAME"
+  ec2_key_name               = ""
 
   ## 自動スケジュール
   cloudwatch_enable_schedule = false
@@ -53,6 +53,7 @@ module "ecs-cicd-github-runner" {
   ec2_github_url             = local.ec2_github_url
   ec2_registration_token     = local.ec2_registration_token
   ec2_runner_name            = "${local.pj}-runner"
+  ec2_runner_version         = "RUNNER-VERSION"
   ec2_runner_tags            = [local.pj]
   ec2_instance_type          = local.ec2_instance_type
   ec2_subnet_id              = local.ec2_subnet

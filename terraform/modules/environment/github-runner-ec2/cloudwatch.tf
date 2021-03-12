@@ -4,8 +4,8 @@
 resource "aws_cloudwatch_event_rule" "start_github_runner_rule" {
   count = var.cloudwatch_enable_schedule ? 1 : 0
 
-  name                = "${var.pj}-GitLab-Runner-StartRule"
-  description         = "Start ${var.pj} GitLab Runner"
+  name                = "${var.pj}-GitHub-Runner-StartRule"
+  description         = "Start ${var.pj} GitHub Runner"
   schedule_expression = var.cloudwatch_start_schedule
 }
 
@@ -29,8 +29,8 @@ DOC
 resource "aws_cloudwatch_event_rule" "stop_github_runner_rule" {
   count = var.cloudwatch_enable_schedule ? 1 : 0
 
-  name                = "${var.pj}-GitLab-Runner-StopRule"
-  description         = "Stop ${var.pj} GitLab Runner"
+  name                = "${var.pj}-GitHub-Runner-StopRule"
+  description         = "Stop ${var.pj} GitHub Runner"
   schedule_expression = var.cloudwatch_stop_schedule
 }
 
