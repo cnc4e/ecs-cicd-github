@@ -1,5 +1,5 @@
 terraform {
-  required_version = ">= 0.13.5"
+  required_version = ">= 0.14.7"
 
   required_providers {
     aws = {
@@ -10,7 +10,7 @@ terraform {
 
   backend "s3" {
     bucket         = "PJ-NAME-tfstate"
-    key            = "gitlab-runner/terraform.tfstate"
+    key            = "github-runner/terraform.tfstate"
     encrypt        = true
     dynamodb_table = "PJ-NAME-tfstate-lock"
     region         = "REGION"
