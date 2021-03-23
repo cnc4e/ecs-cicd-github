@@ -25,3 +25,10 @@ module "github-ecs-cicd-ecs-cluster" {
   # module parameter
   cluster_name = "${local.pj}-cluster"
 }
+
+module "code-iam" {
+  source = "../../../modules/environment/code-iam"
+
+  # common parameter
+  pj = local.pj
+}
