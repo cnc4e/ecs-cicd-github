@@ -88,6 +88,11 @@ variable "codestar_conection_arn" {
   type        = string
 }
 
+variable "github_repository_id" {
+  description = "変更を検知してデプロイする対象のGitHubレポジトリID"
+  type        = string
+}
+
 # cloudwatch.tf
 variable "cloudwatch_event_ecr_repository_name" {
   description = "変更を検知してデプロイする対象のECRレポジトリ名"

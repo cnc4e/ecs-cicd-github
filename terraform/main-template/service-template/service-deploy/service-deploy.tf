@@ -138,6 +138,7 @@ module "deploy-pipeline" {
   codepipeline_ecr_repository_name = local.app_full
   codepipeline_pipeline_role_arn   = "arn:aws:iam::${data.aws_caller_identity.self.account_id}:role/${local.pj}-CodePipelineRole"
   codestar_conection_arn           = data.terraform_remote_state.preparation.outputs.codestar_connection_arn
+  github_repository_id             = "GITHUB-REPOSITORY-ID"
 
   # cloudwatch event
   cloudwatch_event_ecr_repository_name = local.app_full
