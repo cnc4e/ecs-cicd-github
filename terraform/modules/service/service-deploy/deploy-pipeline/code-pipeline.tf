@@ -36,7 +36,7 @@ resource "aws_codepipeline" "this" {
       run_order        = 1
       configuration = {
         ConnectionArn    = var.codestar_conection_arn
-        FullRepositoryId = var.github_repository_id
+        FullRepositoryId = var.codestar_github_repository_id
         BranchName       = "master"
       }
     }

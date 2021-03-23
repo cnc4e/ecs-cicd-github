@@ -51,6 +51,9 @@ locals {
   lb_health_check_path = "/"
 
   codedeploy_termination_wait_time_in_minutes = 5
+
+  github_repository_id = "GITHUB-REPOSITORY-ID"
+
 }
 
 data "aws_caller_identity" "self" {}
@@ -138,7 +141,7 @@ module "deploy-pipeline" {
   codepipeline_ecr_repository_name = local.app_full
   codepipeline_pipeline_role_arn   = "arn:aws:iam::${data.aws_caller_identity.self.account_id}:role/${local.pj}-CodePipelineRole"
   codestar_conection_arn           = data.terraform_remote_state.preparation.outputs.codestar_connection_arn
-  github_repository_id             = "GITHUB-REPOSITORY-ID"
+  codestar_github_repository_id    = local.github_repository_id
 
   # cloudwatch event
   cloudwatch_event_ecr_repository_name = local.app_full

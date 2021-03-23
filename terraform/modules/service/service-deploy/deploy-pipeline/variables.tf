@@ -88,7 +88,7 @@ variable "codestar_conection_arn" {
   type        = string
 }
 
-variable "github_repository_id" {
+variable "codestar_github_repository_id" {
   description = "変更を検知してデプロイする対象のGitHubレポジトリID"
   type        = string
 }
