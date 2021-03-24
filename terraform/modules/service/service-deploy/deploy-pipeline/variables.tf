@@ -57,16 +57,6 @@ variable "codedeploy_termination_wait_time_in_minutes" {
 }
 
 # s3.tf
-variable "s3_service_settings_bucket_name" {
-  description = "appspec.yamlをzipにしたsettings.zipを配置するバケット名"
-  type        = string
-}
-
-variable "s3_service_settings_bucket_arn" {
-  description = "appspec.yamlをzipにしたsettings.zipを配置するバケットのARN"
-  type        = string
-}
-
 variable "s3_artifact_store_name" {
   description = "codepipelineが使用するアーティファクトストアのバケット名"
   type        = string
@@ -100,11 +90,6 @@ variable "cloudwatch_event_ecr_repository_name" {
 }
 
 variable "cloudwatch_event_events_role_arn" {
-  description = "CloudWatch EventからCodePipelineを実行するIAMロール"
-  type        = string
-}
-
-variable "cloudwatch_event_events_role_name" {
   description = "CloudWatch EventからCodePipelineを実行するIAMロール"
   type        = string
 }
