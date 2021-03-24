@@ -29,6 +29,10 @@ data "aws_iam_policy_document" "codepipeline" {
       "s3:GetObject",
       "s3:GetObjectVersion",
       "s3:GetBucketVersioning",
+      "s3:PutObjectAcl",
+      "s3:PutObjectVersionAcl",
+      "s3:ObjectOwnerOverrideToBucketOwner",
+      "s3:PutBucketPublicAccessBlock",
       "ecs:DescribeServices",
       "ecs:DescribeTaskDefinition",
       "ecs:DescribeTasks",
@@ -42,6 +46,8 @@ data "aws_iam_policy_document" "codepipeline" {
       "codedeploy:GetApplicationRevision",
       "codedeploy:RegisterApplicationRevision",
       "codedeploy:GetDeploymentConfig",
+      "codestar-connections:UseConnection",
+      "codestar-connections:PassConnection"
     ]
   }
 }
