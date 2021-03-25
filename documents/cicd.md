@@ -20,7 +20,7 @@ CodePipelineでデプロイするいわゆる`CD`の部分に分かれます。
 ##  GitHub Actions
 
 アプリケーションおよびECSのデプロイ設定はそれぞれGitHubのレポジトリで管理しています。
-アプリケーションレポジトリに変更がプッシュされるとGitHub CICDにより変更内容がAWSのソース置き場（ECR）に配置されます。
+アプリケーションレポジトリに変更がプッシュされるとGitHub Actionsにより変更内容がAWSのソース置き場（ECR）に配置されます。
 
 ![](./images/cicd-github.drawio.svg)
 
@@ -30,7 +30,7 @@ CodePipelineでデプロイするいわゆる`CD`の部分に分かれます。
 
 - GitHub Actionsセルフホストランナー上で docker コマンドを使用してレポジトリのルートにあるdockerfileをbuildする
 - buildしたimageは以下のタグを付与しECRにプッシュする
-  - <ECRホスト名>/<PJ-NAME-APP-NAME>:latest
+  - `<ECRホスト名>/<PJ-NAME-APP-NAME>:latest`
 - このパイプラインは`master`ブランチに対する変更時に実行する
 - パイプラインは`latest`のタグがついたrunnerで実行する
 
@@ -63,7 +63,7 @@ CodePipelineは2つのステージで構成します。`Source`ステージと`D
 
 ### Sourceステージ
 
-Sourceステージは2つのソースアクションを定義しています。S3およびECRから情報を取得するアクションです。それぞれ以下の情報を取得し、アーティファクトとして格納します。格納したアーティファクトは次のステージへ引き継がれます。
+Sourceステージは2つのソースアクションを定義しています。GitHub(ECSレポジトリ)およびECRから情報を取得するアクションです。それぞれ以下の情報を取得し、アーティファクトとして格納します。格納したアーティファクトは次のステージへ引き継がれます。
 
 - CodeStarConnections
   - ECSデプロイ設定をGitHubのレポジトリから取得し、`settings.zip`を作成します。
