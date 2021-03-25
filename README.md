@@ -1,6 +1,6 @@
 # レポジトリの概要
 
-本レポジトリは GitLab Actions + AWS CodePipeline/Deploy を使用したECSのCICDパイプラインの仕組みと構築方法を解説したものです。
+本レポジトリは GitHub Actions + AWS CodePipeline/Deploy を使用したECSのCICDパイプラインの仕組みと構築方法を解説したものです。
 
 AWSの構築はTerraformを使用します。
 
@@ -21,7 +21,7 @@ AWSの構築はTerraformを使用します。
 本レポジトリのモジュール群は以下のバージョンを前提としてます。（構築時のバージョンも記載します。）
 
 terraform 0.14.7 以上　（構築時 0.14.7）  
-aws providor 3.22.0以上　
+aws providor 3.22.0以上（構築時 3.33.0）　
 
 # ドキュメント
 
@@ -41,7 +41,7 @@ aws providor 3.22.0以上　
 │   ├── cicd.md               # CICDの流れを説明したドキュメントです。
 │   ├── howtouse.md           # 本レポジトリのモジュールを使用して環境を構築する方法を解説したドキュメントです。
 │   └── module.md             # 用意しているterraformモジュールを説明したドキュメントです。
-├── sample-repos              # GitLab Actionsのサンプルです。
+├── sample-repos              # GitHub Actionsのサンプルです。
 │   ├── app                   # アプリケーションのサンプルです。
 │   └── ecs                   # ECS設定のサンプルです。
 └── terraform                 # terraformのコード一式を格納しています。
