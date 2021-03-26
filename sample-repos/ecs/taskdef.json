@@ -25,7 +25,7 @@
             "environment": [
                 {
                     "name": "appname",
-                    "value": "cicd test"
+                    "value": "$APP-NAME"
                 }
             ]
         }
