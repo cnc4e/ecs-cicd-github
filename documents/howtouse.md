@@ -190,7 +190,8 @@ GitHub Actionsセルフホストランナーと GitHubを連携するための�
 - 画面中央下部「Self-hosted runners」という項目から[Add new]-[New Runner]を選択します。
 - 画面上部にて、Operationg System「Linux」を選択します。 
 - Download に記載されているコマンドからインストールするrunner のバージョンを確認します。
-  - 記載されているコマンドが次の場合、runnerバージョンは`2.227.1`となります。
+  - 記載されているコマンドが次の場合、runnerバージョンは`2.277.1`となります。
+  
    ``` sh
    curl -O -L https://github.com/actions/runner/releases/download/v2.277.1/actions-runner-linux-x64-2.277.1.tar.gz
    ```
@@ -200,6 +201,7 @@ GitHub Actionsセルフホストランナーと GitHubを連携するための�
    ``` sh
    ./config.sh --url https://github.com/testorg --token ATA6JQMHCQLNAFDBF7KFDMLALR7BK
    ```
+   
 - 画面を`開いたまま`の状態にしておきます。
   - 本画面は開きなおす毎に異なるトークンを発行します。
   そのため、次の[GitHub Actionsセルフホストランナー](#github-actionsセルフホストランナー)で指示があるまで、本画面は開いたままにしてください。
@@ -220,7 +222,7 @@ ec2_github_url、ec2_registration_token、ec2_runner_versionを[GitHub環境の�
 
 ``` sh
 # ↓sedで置換する時、http:の`:`の前にエスケープを入れてください。例 https\://github.com
-sed -i -e 's:GITHUB-URL:<先ほどGitLHubで確認したURL>:g' github-runner.tf 
+sed -i -e 's:GITHUB-URL:<先ほどGitHubで確認したURL>:g' github-runner.tf 
 sed -i -e 's:REGIST-TOKEN:<先ほどGitHubで確認したトークン>:g' github-runner.tf
 sed -i -e 's:RUNNER-VERSION:<先ほどGitHubで確認したrunnerバージョン>:g' github-runner.tf
 ```
@@ -394,13 +396,14 @@ GitHubでの具体的な設定作業は次の通りです。
 - `app`レポジトリでは「docker build」を行い、指定したECRへプッシュします。
 Actionの作業状態は各レポジトリの上部メニュー[Actions]で確認できます。
 - 正常に動作すればECRにデータが格納されているはずなので確認してください。
+  - GitHub Actions の設定内容はappレポジトリの`.github\workflows\workflow.yml`となります. GitHub Actionが動作しない場合は本ファイルが正常にコピーされているかどうか確認してください。
 
   ``` sh
   cd $CLONEDIR
   git clone <appレポジトリのクローンURL>
   # クローン時にID/パスワードが求められたらGitHubで使用しているユーザでログイン
   cd app
-  cp -r $CLONEDIR/ecs-cicd-github/$APPNAME/app/* ./
+  cp -r $CLONEDIR/ecs-cicd-github/$APPNAME/app/. ./
   git add .
   git commit -m "init"
   git push
@@ -431,21 +434,20 @@ AWSマネージメントコンソールで実施する手順になります。
 本手順は[GitHub Actionsによるソース配置](#github-actionsによるソース配置)で作成したECSレポジトリの更新をAWSから監視するための設定となります。
 具体的な設定作業は次の通りです。
 
-- AWSマネージメントコンソールにログインし、メニューからCodePipline`の画面に移動します。
+- AWSマネージメントコンソールにログインし、メニューからCodePiplineの画面に移動します。
 - 左メニューで[設定]-[接続]を選択します。
 - 上記で出力されたcodestar_connection_arnが一致する接続を選択
 します。
   - ステータスが`保留中`になっているはずです。
 - 画面上部の[保留中の接続を更新]を選択します。
-- 表示されるポップアップ画面から[新しいアプリをインストールする
-択します。
+- 表示されるポップアップ画面から[新しいアプリをインストールする]を選択します。
 - GitHubの認証が求められるため、ID/パスワードを入力します。
 - 一覧から使用するOrganizationを選択します。
 - 「Repository access」という項目で[Only select repositories]
 し、作成したecsレポジトリを選択します。
 - [save]を選択します。
 - [接続]を選択します。
-- CodePipeline の画面に戻り、ステータスが「利用可能」になって
+- CodePipelineの画面に戻り、ステータスが「利用可能」になって
 とを確認します。
 
 
@@ -457,7 +459,27 @@ AWSマネージメントコンソールで実施する手順になります。
 cd $CLONEDIR/ecs-cicd-github/terraform/$PJNAME/$APPNAME/service-deploy
 ```
 
-以下コマンドでリソースを作成します。
+`service-deploy.tf`を編集します。
+github_repository_idを修正します。
+ECSポジトリのパスは次のようになります。
+- `ECSレポジトリのパス = Organization名/レポジトリ名`
+
+例えばOrganization名：testorg、レポジトリ名：ecsの場合、
+レポジトリのパスは`testorg/ecs`となります。
+
+**Linuxの場合**
+
+``` sh
+sed -i -e 's:GITHUB-REPOSITORY-ID:<ECSレポジトリのパス>:g' github-runner.tf 
+```
+
+**macの場合**
+
+``` sh
+sed -i "" -e 's:GITHUB-REPOSITORY-ID:<ECSレポジトリのパス>:g' github-runner.tf
+```
+
+修正したら以下コマンドでリソースを作成します。
 
 ``` sh
 terraform init
@@ -535,18 +557,18 @@ cd $CLONEDIR/ecs
 ```
 
 `taskdef.json`を修正します。
-以下の例ではコンテナに付与する環境変数`appname`の値を`$APP-NAME`->`cicd test update`に置換しています。
+以下の例ではコンテナに付与する環境変数`appname`の値を`cicd test`->`cicd test update`に置換しています。
 
 **Linuxの場合**
 
 ``` sh
-sed -i -e 's:\: "'$APPNAME'":\: "cicd test update":g' taskdef.json
+sed -i -e 's:\: "cicd test":\: "cicd test update":g' taskdef.json
 ```
 
 **macの場合**
 
 ``` sh
-sed -i "" -e 's:\: "'$APPNAME'":\: "cicd test update":g' taskdef.json
+sed -i "" -e 's:\: "cicd test":\: "cicd test update":g' taskdef.json
 ```
 
 変更をGitHubにプッシュします。
