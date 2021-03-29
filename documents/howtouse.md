@@ -649,7 +649,10 @@ terraform destroy
 
 ### GitHubの環境削除
 
-本手順でGitHubのレポジトリ削除およびセルフホストランナーの登録解除を実施します。
+本手順でGitHubにおける次の環境削除を実施します。
+- レポジトリ削除
+― セルフホストランナー登録解除
+- CodeStarConnections連携用アプリケーションの削除
 
 レポジトリの削除方法は以下の通りです。
 - GitHubにログインして、削除するレポジトリのTOP画面に移動します。
@@ -665,6 +668,14 @@ terraform destroy
 - 画面中央下部「Runner Groups」から対象ランナーを探し、右側の[・・・]-[Remove]を選択します。
 - [Force remove this runner]を選択します。
 - 「Runner Groups」一覧に対象ランナーが存在しないことを確認します。
+
+CodeStarConnections連携用アプリケーションの削除方法は以下の通りです。
+- 使用するOrganizationの`owner権限を持つユーザ`でGitHubにログインし、Organization のTOP画面に移動します。
+- 上部メニューバーの[Settings]を選択します。
+- 左メニューから[Installed GitHub Apps]を選択します。
+- 画面中央の[AWS Connector for GitHub]-[Configure]を選択します。
+- 「Danger Zone」にある[Uninstall "AWS Connector for GitHub"]を選択します。
+- [OK]を選択します。
 
 
 ### ディレクトリ等の掃除
