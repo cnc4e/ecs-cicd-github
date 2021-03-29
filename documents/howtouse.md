@@ -470,13 +470,13 @@ ECSポジトリのパスは次のようになります。
 **Linuxの場合**
 
 ``` sh
-sed -i -e 's:GITHUB-REPOSITORY-ID:<ECSレポジトリのパス>:g' github-runner.tf 
+sed -i -e 's:GITHUB-REPOSITORY-ID:<ECSレポジトリのパス>:g' service-deploy.tf 
 ```
 
 **macの場合**
 
 ``` sh
-sed -i "" -e 's:GITHUB-REPOSITORY-ID:<ECSレポジトリのパス>:g' github-runner.tf
+sed -i "" -e 's:GITHUB-REPOSITORY-ID:<ECSレポジトリのパス>:g' service-deploy.tf
 ```
 
 修正したら以下コマンドでリソースを作成します。
